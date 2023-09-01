@@ -75,10 +75,15 @@ def unsafe_execute(check_program, result, timeout):
                 with time_limit(timeout):
                     exec(check_program, exec_globals)
             result.append("passed")
-        except TimeoutException:
+        except Exception as error:
+            # handle the exception
+            text=f"{{'class':'{type(error).__name__}','message':'{error}'}}"
+            result.append(text)
+        except TimeoutException as error:
             result.append("timed out")
         except BaseException as e:
-            result.append(f"failed: {e}")
+            text=f"{{'class':'{type(error).__name__}','message':'{error}'}}"
+            result.append(text)
 
         # Needed for cleaning up.
         shutil.rmtree = rmtree
