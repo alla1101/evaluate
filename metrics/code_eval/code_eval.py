@@ -176,7 +176,7 @@ class CodeEval(evaluate.Metric):
                         futures.append(future)
                         completion_id[task_id] += 1
                         n_samples += 1
-                    pbar.update();
+                    pbar.update()
 
             for future in as_completed(futures):
                 result = future.result()
