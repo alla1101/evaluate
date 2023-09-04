@@ -84,6 +84,9 @@ def unsafe_execute(check_program, result, timeout):
         except BaseException as e:
             text=f"{{'class':'{type(error).__name__}','message':'{error}'}}"
             result.append(text)
+        except TypeError as e:
+            text=f"{{'class':'{type(error).__name__}','message':'{error}'}}"
+            result.append(text)
 
         # Needed for cleaning up.
         shutil.rmtree = rmtree

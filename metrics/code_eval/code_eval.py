@@ -23,7 +23,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import datasets
 import numpy as np
-
+from tqdm import tqdm;
 import evaluate
 
 from .execute import check_correctness
@@ -167,7 +167,7 @@ class CodeEval(evaluate.Metric):
             n_samples = 0
             results = defaultdict(list)
 
-            for task_id, (candidates, test_case) in enumerate(zip(predictions, references)):
+            for task_id, (candidates, test_case) in enumerate(tqdm(zip(predictions, references))):
                 for candidate in candidates:
                     test_program = candidate + "\n" + test_case
                     args = (test_program, timeout, task_id, completion_id[task_id])
