@@ -167,18 +167,16 @@ class CodeEval(evaluate.Metric):
             n_samples = 0
             results = defaultdict(list)
 
-            with tqdm(total=len(references)) as pbar:
-                for task_id, (candidates, test_case) in enumerate(zip(predictions, references)):
-                    for candidate in candidates:
-                        test_program = candidate + "\n" + test_case
-                        args = (test_program, timeout, task_id, completion_id[task_id])
-                        future = executor.submit(check_correctness, *args)
-                        futures.append(future)
-                        completion_id[task_id] += 1
-                        n_samples += 1
-                    pbar.update()
+            for task_id, (candidates, test_case) in enumerate(zip(predictions, references)):
+                for candidate in candidates:
+                    test_program = candidate + "\n" + test_case
+                    args = (test_program, timeout, task_id, completion_id[task_id])
+                    future = executor.submit(check_correctness, *args)
+                    futures.append(future)
+                    completion_id[task_id] += 1
+                    n_samples += 1
 
-            for future in as_completed(futures):
+            for future in tqdm.tqdm(as_completed(futures), total=len(futures)):
                 result = future.result()
                 results[result["task_id"]].append((result["completion_id"], result))
 
