@@ -23,7 +23,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import datasets
 import numpy as np
-from tqdm import tqdm;
+import tqdm;
 import evaluate
 
 from .execute import check_correctness
@@ -176,6 +176,7 @@ class CodeEval(evaluate.Metric):
                     completion_id[task_id] += 1
                     n_samples += 1
 
+            print("Running test suites...")
             for future in tqdm.tqdm(as_completed(futures), total=len(futures)):
                 result = future.result()
                 results[result["task_id"]].append((result["completion_id"], result))
