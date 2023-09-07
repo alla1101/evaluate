@@ -165,7 +165,7 @@ setup(
     author="HuggingFace Inc.",
     author_email="leandro@huggingface.co",
     url="https://github.com/huggingface/evaluate",
-    download_url="https://github.com/huggingface/evaluate/tags",
+    download_url="https://github.com/alla1101/evaluate/tags",
     license="Apache 2.0",
     package_dir={"": "src"},
     packages=find_packages("src"),
